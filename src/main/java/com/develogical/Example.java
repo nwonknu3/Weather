@@ -8,7 +8,9 @@ public class Example {
     public static void main(String[] args) {
         // This is just an example of using the 3rd party API - delete this class before submission.
         int maxCache = 100;
-        MyForecaster forecaster = new Cacher(new ForecastAdapter(), maxCache);
+
+        int intervalCacheInterval = 1000;
+        MyForecaster forecaster = new Cacher(new ForecastAdapter(), maxCache, intervalCacheInterval);
 
         Forecast londonForecast = forecaster.forecastFor(Region.LONDON, Day.MONDAY);
 

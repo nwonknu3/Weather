@@ -13,7 +13,7 @@ public class Cacher implements MyForecaster {
 
 
     int maxCache;
-    public Cacher(MyForecaster delegate, int maxCache) {
+    public Cacher(MyForecaster delegate, int maxCache, int intervalCacheInterval) {
         this.delegate = delegate;
         this.maxCache = maxCache;
     }

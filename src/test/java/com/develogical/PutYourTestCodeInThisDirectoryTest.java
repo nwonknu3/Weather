@@ -15,7 +15,9 @@ public class PutYourTestCodeInThisDirectoryTest {
         MyForecaster delegate = mock(MyForecaster.class);
         when(delegate.forecastFor(Region.LONDON, Day.MONDAY)).thenReturn(new Forecast("hot", 32));
         int maxCache = 5;
-        MyForecaster myforecaster = new Cacher(delegate, maxCache);
+
+        int intervalCacheInterval = 1000;
+        MyForecaster myforecaster = new Cacher(delegate, maxCache, intervalCacheInterval);
 
         Forecast forecast = myforecaster.forecastFor(Region.LONDON, Day.MONDAY);
         assertEquals("hot", forecast.summary());
@@ -30,7 +32,9 @@ public class PutYourTestCodeInThisDirectoryTest {
         when(delegate.forecastFor(Region.LONDON, Day.MONDAY)).thenReturn(new Forecast("hot", 32));
 
         int maxCache = 5;
-        MyForecaster myforecaster = new Cacher(delegate, maxCache);
+
+        int intervalCacheInterval = 1000;
+        MyForecaster myforecaster = new Cacher(delegate, maxCache, intervalCacheInterval);
 
         Forecast forecast = myforecaster.forecastFor(Region.LONDON, Day.MONDAY);
         assertEquals("hot", forecast.summary());
@@ -51,7 +55,8 @@ public class PutYourTestCodeInThisDirectoryTest {
         MyForecaster delegate = mock(MyForecaster.class);
         int maxCache = 2;
 
-        MyForecaster myforecaster = new Cacher(delegate, maxCache);
+        int intervalCacheInterval = 1000;
+        MyForecaster myforecaster = new Cacher(delegate, maxCache, intervalCacheInterval);
 
         myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
 
@@ -67,7 +72,8 @@ public class PutYourTestCodeInThisDirectoryTest {
     public void getsForecastFromCacheIfExceedLimitCallTwoTimesOneCached() throws Exception {
         MyForecaster delegate = mock(MyForecaster.class);
         int maxCache = 2;
-        MyForecaster myforecaster = new Cacher(delegate, maxCache);
+        int intervalCacheInterval = 1000;
+        MyForecaster myforecaster = new Cacher(delegate, maxCache, intervalCacheInterval);
         myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
         myforecaster.forecastFor(Region.LONDON, Day.MONDAY);
         myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
@@ -82,19 +88,18 @@ public class PutYourTestCodeInThisDirectoryTest {
         MyForecaster delegate = mock(MyForecaster.class);
         int maxCache = 2;
 
+        int intervalCacheInterval = 1000;
 
 
+        MyForecaster myforecaster = new Cacher(delegate, maxCache, intervalCacheInterval);
 
-        MyForecaster myforecaster = new Cacher(delegate, maxCache);
         myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
-        myforecaster.forecastFor(Region.LONDON, Day.MONDAY);
+
+        Thread.sleep(intervalCacheInterval);
+
         myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
-        myforecaster.forecastFor(Region.BIRMINGHAM, Day.MONDAY);
+
         verify(delegate, times(2)).forecastFor(Region.BIRMINGHAM, Day.MONDAY);
-
-        
-
-
 
 
     }
